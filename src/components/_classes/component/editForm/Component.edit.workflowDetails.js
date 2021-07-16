@@ -120,6 +120,5 @@ export default [
     label: 'Database Index',
     tooltip: 'Set this field as an index within the database. Increases performance for submission queries.'
   }
-  
 ];
 /* eslint-enable max-len */

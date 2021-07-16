@@ -41,7 +41,6 @@ export default [
         return values;
       }
     },
-    
   },
   {
     weight: 30,

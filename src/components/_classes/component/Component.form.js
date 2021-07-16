@@ -1,18 +1,8 @@
 import _ from 'lodash';
 
-import ComponentEditAddons from './editForm/Component.edit.addons';
-import ComponentEditConditional from './editForm/Component.edit.conditional';
-import ComponentEditData from './editForm/Component.edit.data';
-import ComponentEditAPI from './editForm/Component.edit.api';
-import ComponentEditDisplay from './editForm/Component.edit.display';
-import ComponentEditLogic from './editForm/Component.edit.logic';
-import ComponentEditValidation from './editForm/Component.edit.validation';
-import ComponentEditLayout from './editForm/Component.edit.layout';
 import EditFormUtils from './editForm/utils';
-import WorkflowDetails from './editForm/Component.edit.workflowDetails';
-import UserRoles from './editForm/Component.edit.UserRoles';
 import LinkPiPoints from './editForm/Component.edit.LinkPiPoints';
-export default function (...extend) {
+export default function(...extend) {
   const components = _.cloneDeep([
     {
       type: 'tabs',
@@ -31,8 +21,8 @@ export default function (...extend) {
         //   components: UserRoles
         // },
         {
-          label: "Link pi points",
-          key: "linkPiPoints",
+          label: 'Link pi points',
+          key: 'linkPiPoints',
           weight: 20,
           components: LinkPiPoints
         },
