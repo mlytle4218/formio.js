@@ -1379,7 +1379,6 @@ export default class WebformBuilder extends Component {
       editForm: this.editForm.render(),
       /***************************************************************
        * remember
-       * 
        * changed this to remove the preview panel on the modal
        */
       preview: false,
