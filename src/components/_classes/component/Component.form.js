@@ -9,61 +9,87 @@ import ComponentEditLogic from './editForm/Component.edit.logic';
 import ComponentEditValidation from './editForm/Component.edit.validation';
 import ComponentEditLayout from './editForm/Component.edit.layout';
 import EditFormUtils from './editForm/utils';
-
-export default function(...extend) {
+import WorkflowDetails from './editForm/Component.edit.workflowDetails';
+import UserRoles from './editForm/Component.edit.UserRoles';
+import LinkPiPoints from './editForm/Component.edit.LinkPiPoints';
+export default function (...extend) {
   const components = _.cloneDeep([
     {
       type: 'tabs',
       key: 'tabs',
       components: [
+        // {
+        //     label: 'Workflow Details',
+        //     key: 'workflow_details',
+        //     weight: 0,
+        //     components: WorkflowDetails
+        // },
+        // {
+        //   label: "User Roles",
+        //   key: "user_roles",
+        //   weight: 10,
+        //   components: UserRoles
+        // },
         {
-          label: 'Display',
-          key: 'display',
-          weight: 0,
-          components: ComponentEditDisplay
-        },
-        {
-          label: 'Data',
-          key: 'data',
-          weight: 10,
-          components: ComponentEditData
-        },
-        {
-          label: 'Validation',
-          key: 'validation',
+          label: "Link pi points",
+          key: "linkPiPoints",
           weight: 20,
-          components: ComponentEditValidation
+          components: LinkPiPoints
         },
-        {
-          label: 'API',
-          key: 'api',
-          weight: 30,
-          components: ComponentEditAPI
-        },
-        {
-          label: 'Conditional',
-          key: 'conditional',
-          weight: 40,
-          components: ComponentEditConditional
-        },
-        {
-          label: 'Logic',
-          key: 'logic',
-          weight: 50,
-          components: ComponentEditLogic
-        },
-        {
-          label: 'Layout',
-          key: 'layout',
-          weight: 60,
-          components: ComponentEditLayout
-        },
-        {
-          label: 'Addons',
-          key: 'addons',
-          weight: 70,
-          components: ComponentEditAddons
-        },
+        // {
+        //   label: 'old display',
+        //   key: 'display',
+        //   weight: 30,
+        //   components: ComponentEditDisplay
+        // }
+        // {
+        //   label: 'Display',
+        //   key: 'display',
+        //   weight: 0,
+        //   components: ComponentEditDisplay
+        // },
+        // {
+        //   label: 'Data',
+        //   key: 'data',
+        //   weight: 10,
+        //   components: ComponentEditData
+        // },
+        // {
+        //   label: 'Validation',
+        //   key: 'validation',
+        //   weight: 20,
+        //   components: ComponentEditValidation
+        // },
+        // {
+        //   label: 'API',
+        //   key: 'api',
+        //   weight: 30,
+        //   components: ComponentEditAPI
+        // },
+        // {
+        //   label: 'Conditional',
+        //   key: 'conditional',
+        //   weight: 40,
+        //   components: ComponentEditConditional
+        // },
+        // {
+        //   label: 'Logic',
+        //   key: 'logic',
+        //   weight: 50,
+        //   components: ComponentEditLogic
+        // },
+        // {
+        //   label: 'Layout',
+        //   key: 'layout',
+        //   weight: 60,
+        //   components: ComponentEditLayout
+        // },
+        // {
+        //   label: 'Addons',
+        //   key: 'addons',
+        //   weight: 70,
+        //   components: ComponentEditAddons
+        // },
       ]
     }
   ]).concat(extend.map((items) => ({

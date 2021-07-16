@@ -224,7 +224,7 @@ gulp.task('rebuild-scripts', gulp.series(
     'scripts-embed',
     'scripts-contrib',
     'scripts-form',
-    'scripts-full'
+    'scripts-full' 
   ),
   'dist',
   'types'

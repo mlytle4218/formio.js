@@ -13,6 +13,7 @@ export default class ComponentModal {
   }
 
   constructor(component, element, isOpened, currentValue) {
+    console.log('ComponentModal constructor');
     this.isOpened = isOpened;
     this.component = component;
     this.element = element;

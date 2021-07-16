@@ -7,18 +7,24 @@ export default class FormBuilder extends Form {
   constructor(element, form, options) {
     form = form || {};
     options = options || {};
-    super(element, form, Object.assign(
-      options,
-      FormBuilder.options,
-      ((Formio.options && Formio.options.builder) ? Formio.options.builder : {})
-    ));
+    super(
+      element,
+      form,
+      Object.assign(
+        options,
+        FormBuilder.options,
+        ((Formio.options && Formio.options.builder) ? Formio.options.builder : {})
+      )
+    );
   }
 
   create(display) {
+    console.log('create')
     if (Builders.builders[display]) {
       return new Builders.builders[display](this.element, this.options);
     }
     else {
+      console.log('else')
       // eslint-disable-next-line new-cap
       return new Builders.builders['webform'](this.element, this.options);
     }

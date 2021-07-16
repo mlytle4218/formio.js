@@ -10,7 +10,7 @@ import maskInput from '@formio/vanilla-text-mask';
  * The root component for all elements within the Form.io renderer.
  */
 export default class Element {
-  constructor(options) {
+  constructor(options) { 
     /**
      * The options for this component.
      * @type {{}}

@@ -833,6 +833,7 @@ export default class WebformBuilder extends Component {
 
   /* eslint-disable max-statements */
   onDrop(element, target, source, sibling) {
+    console.log("onDrop")
     if (!target) {
       return;
     }
