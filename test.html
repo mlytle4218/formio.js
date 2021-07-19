@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="C:\Users\marc.lytle\Desktop\work2\formio.js\dist\formio.full.min.css">
+    <script src="C:\Users\marc.lytle\Desktop\work2\formio.js\dist\formio.full.min.js"></script>
+
+
+    <script type="text/javascript">
+        window.onload = function () {
+            Formio.builder(document.getElementById('formbuilder'), {}, {
+                icons: 'fontawesome'
+            }).then((form) => {
+                form.on("change", () => {
+                    console.log(form.schema.components);
+                });
+            });
+        };
+    </script>
+</head>
+
+<body>
+    <div id="formbuilder"></div>
+</body>
+
+</html>
