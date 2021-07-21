@@ -1,0 +1,108 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="C:\Users\marc.lytle\Desktop\work2\formio.js\dist\formio.full.min.css">
+    <!-- <script src="C:\Users\marc.lytle\Desktop\work2\formio.js\dist\formio.full.js"></script> -->
+    <script src="C:\Users\marc.lytle\Desktop\work2\formio.js\lib\index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+
+
+    <script type="text/javascript">
+        var MyComponent = Formio.Components.components.textarea; // or whatever
+        class MyNewComponent extends MyComponent {
+
+            static schema(...extend) {
+                return super.schema({
+                    type: 'MyNewComponent',
+                    label: "The Default Label",
+                    any_other_fields: "",
+                }, ...extend);
+            }
+
+            static get builderInfo() {
+                return {
+                    title: 'Name in the Builder',
+                    group: 'custom',
+                    icon: 'picture-o',
+                    weight: 5,
+                    schema: this.schema()
+                };
+            }
+
+            render(element) {
+                // Here's where you add your HTML to get put up.
+                // 
+                var tpl = "<div ref='myref'>Hi there</div>";
+                // Note the use of the 'ref' tag, which is used later to find 
+                // parts of your rendered element.
+
+                // If you need to render the superclass,
+                // you can do that with 
+                // tpl+=super.render(element);
+                this.setValue('tom');
+
+                // This wraps your template to give it the standard label and bulider decorations         
+                return Formio.Components.components.component.prototype.render.call(this, tpl);
+
+            }
+
+            attach(element) {
+                // This code is called after rendering, when the DOM has been created.
+                // You can find your elements above like this:
+                this.loadRefs(element, { myref: 'single' });
+
+                var superattach = super.attach(element);
+                // Here do whatever you need to attach event handlers to the dom.
+                this.refs.myref.onmouseover = function() {
+                    alert("hi");
+                }
+                // this.refs.myref.on('click', () => { alert("hi!"); });
+                console.log(this.refs.myref)
+
+                return superattach;
+            }
+
+            getvalue() {
+                return 3; // the value this element puts into the form
+            }
+            // OR, depending on which component type you're basing on:
+            getValueAt(index, value, flags) { }
+
+            setValue(value) {
+                return "bob";
+                // modify your DOM here to reflect that the value should be 'value'.
+            };
+            // OR, depending on what component type:
+            getValueAt(index) { }
+
+        }
+
+        // This sets the form that pops up in the Builder when you create
+        // one of these.  It is basically just a standard form, and you
+        // can look at the contents of this in the debugger.
+        MyNewComponent.editForm = MyComponent.editForm;
+
+
+        // Register your component to Formio
+        Formio.Components.addComponent('MyNewComponent', MyNewComponent);
+        window.onload = function () {
+            console.log('loaded');
+            Formio.builder(document.getElementById('formbuilder'), {}, {
+                icons: 'fontawesome'
+            }).then((form) => {
+                form.on("change", () => {
+                    console.log(form.schema.components);
+                });
+            });
+        };
+    </script>
+</head>
+
+<body>
+    <div id="formbuilder"></div>
+</body>
+
+</html>

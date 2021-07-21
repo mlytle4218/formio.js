@@ -1,0 +1,32 @@
+import _ from 'lodash';
+
+import EditFormUtils from './editForm/utils';
+import LinkPiPoints from './editForm/Component.edit.LinkPiPoints';
+export default function(...extend) {
+  const components = _.cloneDeep([
+    {
+      type: 'tabs',
+      key: 'tabs',
+      components: [
+        {
+          label: 'Link pi points',
+          key: 'linkPiPoints',
+          weight: 0,
+          components: LinkPiPoints
+        }
+      ]
+    }
+  ]).concat(extend.map((items) => ({
+    type: 'tabs',
+    key: 'tabs',
+    components: _.cloneDeep(items),
+  })));
+  console.log(components);
+  console.log(null);
+  return {
+    components: _.unionWith(components, EditFormUtils.unifyComponents).concat({
+      type: 'hidden',
+      key: 'type'
+    })
+  };
+}

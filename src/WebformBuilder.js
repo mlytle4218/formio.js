@@ -1282,6 +1282,7 @@ export default class WebformBuilder extends Component {
   }
 
   editComponent(component, parent, isNew, isJsonEdit, original, flags = {}) {
+    console.log('editcomponent opened');
     if (!component.key) {
       return;
     }
@@ -1302,7 +1303,6 @@ export default class WebformBuilder extends Component {
     if (this.editForm) {
       this.editForm.destroy();
     }
-
     // Allow editForm overrides per component.
     const overrides = _.get(this.options, `editForm.${componentCopy.type}`, {});
 
@@ -1342,6 +1342,7 @@ export default class WebformBuilder extends Component {
         }
       ]
     } : ComponentClass.editForm(_.cloneDeep(overrides));
+    console.log(this.editForm);
     const instanceOptions = {};
 
     this.hook('instanceOptionsPreview', instanceOptions);

@@ -875,6 +875,8 @@ export default class SelectComponent extends Field {
 
   /* eslint-disable max-statements */
   attach(element) {
+    // console.log('attach(element)');
+    // console.log(element);
     const superAttach = super.attach(element);
     this.loadRefs(element, {
       selectContainer: 'single',
@@ -1311,6 +1313,8 @@ export default class SelectComponent extends Field {
   }
 
   setValue(value, flags = {}) {
+    console.log('in select setValue');
+    console.log(value);
     const previousValue = this.dataValue;
     const changed = this.updateValue(value, flags);
     value = this.dataValue;
