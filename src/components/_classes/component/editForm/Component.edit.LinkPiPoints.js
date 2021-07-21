@@ -20,25 +20,25 @@ export default [
     weight: 10,
     tooltip: 'The PI Point to which the data input will refer.',
     dataSrc: 'custom',
-    valueProperty: 'value_drop_down',
+    valueProperty: 'valueDropDown',
     data: {
       custom(context) {
-        var values_pi_point = [];
-        values_pi_point.push(
-          { label: 'Point1', value_drop_down: 'point_1' },
-          { label: 'Point2', value_drop_down: 'point_2' },
-          { label: 'Point3', value_drop_down: 'point_3' },
-          { label: 'Point4', value_drop_down: 'point_4' }
+        var valuePiPointArray = [];
+        valuePiPointArray.push(
+          { label: 'Point1', valueDropDown: 'point_1' },
+          { label: 'Point2', valueDropDown: 'point_2' },
+          { label: 'Point3', valueDropDown: 'point_3' },
+          { label: 'Point4', valueDropDown: 'point_4' }
         );
         context.utils.eachComponent(context.instance.options.editForm.components, function(component, path) {
           if (component.key !== context.data.key) {
-            values_pi_point.push({
+            valuePiPointArray.push({
               label: component.label || component.key,
               value: path
             });
           }
         });
-        return values_pi_point;
+        return valuePiPointArray;
       }
     },
   },
@@ -50,23 +50,23 @@ export default [
     weight: 20,
     tooltip: 'The Type of Input required.',
     dataSrc: 'custom',
-    valueProperty: 'value_input_type',
+    valueProperty: 'valueInputType',
     data: {
       custom(context) {
-        var values_input_type = [];
-        values_input_type.push(
-                  { label: 'Textfield', value_input_type: '1' },
-                  { label: 'Number', value_input_type: '2' }
+        var valueInputTypeArray = [];
+        valueInputTypeArray.push(
+                  { label: 'Textfield', valueInputType: '1' },
+                  { label: 'Number', valueInputType: '2' }
         );
         context.utils.eachComponent(context.instance.options.editForm.components, function(component, path) {
           if (component.key !== context.data.key) {
-            values_input_type.push({
+            valueInputTypeArray.push({
               label: component.label || component.key,
               value: path
             });
           }
         });
-        return values_input_type;
+        return valueInputTypeArray;
       }
     },
   },
