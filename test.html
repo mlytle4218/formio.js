@@ -7,9 +7,63 @@
     <link rel="stylesheet" href="C:\Users\marc.lytle\Desktop\work2\formio.js\dist\formio.full.min.css">
     <script src="C:\Users\marc.lytle\Desktop\work2\formio.js\dist\formio.full.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.2.1/jstree.min.js"></script>
 
+    <style type="text/css">
+        .treeSelect {
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            border-color: .15s ease-in-out;
+            box-shadow: .15s ease-in-out;
+        }
+
+        .treeSelect>ul {
+            list-style-type: none;
+        }
+
+        .treeSelect>ul>ul {
+            list-style-type: none;
+            cursor: pointer;
+            user-select: none; /* Prevent text selection */
+        }
+    </style>
 
     <script type="text/javascript">
+
+        otherjsondata = [{
+            "id": "superheroes",
+            "parent": "#",
+            "text": "Superheroes",
+
+        }, {
+            "id": "dc",
+            "parent": "superheroes",
+            "text": "DC",
+        }, {
+            "id": "superwoman",
+            "parent": "dc",
+            "text": "Superwoman"
+        }, {
+            "id": "aquaman",
+            "parent": "dc",
+            "text": "Aquaman"
+        }, {
+            "id": "marvel",
+            "parent": "superheroes",
+            "text": "Marvel"
+        }, {
+            "id": "ironman",
+            "parent": "marvel",
+            "text": "Ironman"
+        }, {
+            "id": "spiderman",
+            "parent": "marvel",
+            "text": "Spiderman"
+        }]
+
+
+
         var MyComponent = Formio.Components.components.textarea; // or whatever
         class MyNewComponent extends MyComponent {
 
@@ -17,7 +71,6 @@
                 return super.schema({
                     type: 'MyNewComponent',
                     label: "The Default Label",
-                    key: 'newComp',
                     any_other_fields: "",
                 }, ...extend);
             }
@@ -33,9 +86,53 @@
             }
 
             render(element) {
-                // Here's where you add your HTML to get put up.
-                // 
-                var tpl = "<div ref='myref' class='btn btn-primary'>Hi there</div>";
+
+                var tpl = "<div class='treeSelect' ref='myref'>";
+
+
+                var dataMap = {};
+                otherjsondata.forEach((node) => {
+                    dataMap[node.id] = node
+                })
+
+                let root = [];
+
+                otherjsondata.forEach((node) => {
+                    let parent = dataMap[node.parent];
+                    if (parent) {
+                        if (!parent.children) {
+                            parent.children = [];
+                        }
+                        // doing a check here to make sure it's not already in there
+                        // when the form loads a second or third time
+                        if (parent.children.indexOf(node) === -1) {
+                            parent.children.push(node)
+                        }
+                    } else {
+                        root.push(node)
+                    }
+                })
+
+
+
+                function recursiveUnorderedListGen(input, htmlObject) {
+                    tpl += "<ul class='nested'>";
+                    if (input.children) {
+                        tpl += "<li><span class='caret'>" + input.id + "</li>"
+                        input.children.forEach((child) => {
+                            recursiveUnorderedListGen(child, tpl)
+                        })
+                    } else {
+                        tpl += "<li ref='item'>" + input.id + "</li>"
+                    }
+                    tpl += "</ul>"
+
+                }
+                recursiveUnorderedListGen(root[0]);
+
+                tpl += "</div>";
+
+
                 // Note the use of the 'ref' tag, which is used later to find 
                 // parts of your rendered element.
 
@@ -51,12 +148,18 @@
             attach(element) {
                 // This code is called after rendering, when the DOM has been created.
                 // You can find your elements above like this:
-                this.loadRefs(element, { myref: 'single' });
+                this.loadRefs(element, { item: 'multiple' });
 
                 var superattach = super.attach(element);
-                this.refs.myref.onclick = (event) =>{
-                    this.setValue('eric')
-                }
+
+
+                this.refs.item.forEach((it) => {
+                    it.onclick = (event) => {
+                        this.setValue(it.innerHTML)
+                    }
+                })
+
+
 
                 return superattach;
             }
@@ -91,6 +194,9 @@
                     console.log(form.schema.components);
                 });
             });
+
+
+
         };
     </script>
 </head>

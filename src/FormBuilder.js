@@ -19,12 +19,12 @@ export default class FormBuilder extends Form {
   }
 
   create(display) {
-    console.log('create');
+    // console.log('create');
     if (Builders.builders[display]) {
       return new Builders.builders[display](this.element, this.options);
     }
     else {
-      console.log('else');
+      // console.log('else');
       // eslint-disable-next-line new-cap
       return new Builders.builders['webform'](this.element, this.options);
     }

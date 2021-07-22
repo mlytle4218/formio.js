@@ -1313,8 +1313,6 @@ export default class SelectComponent extends Field {
   }
 
   setValue(value, flags = {}) {
-    console.log('in select setValue');
-    console.log(value);
     const previousValue = this.dataValue;
     const changed = this.updateValue(value, flags);
     value = this.dataValue;

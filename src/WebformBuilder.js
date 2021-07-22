@@ -833,7 +833,6 @@ export default class WebformBuilder extends Component {
 
   /* eslint-disable max-statements */
   onDrop(element, target, source, sibling) {
-    console.log('onDrop');
     if (!target) {
       return;
     }
@@ -1282,7 +1281,7 @@ export default class WebformBuilder extends Component {
   }
 
   editComponent(component, parent, isNew, isJsonEdit, original, flags = {}) {
-    console.log('editcomponent opened');
+    // console.log('editcomponent opened');
     if (!component.key) {
       return;
     }
@@ -1342,7 +1341,7 @@ export default class WebformBuilder extends Component {
         }
       ]
     } : ComponentClass.editForm(_.cloneDeep(overrides));
-    console.log(this.editForm);
+    // console.log(this.editForm);
     const instanceOptions = {};
 
     this.hook('instanceOptionsPreview', instanceOptions);
