@@ -16,20 +16,54 @@
             border-radius: .25rem;
             border-color: .15s ease-in-out;
             box-shadow: .15s ease-in-out;
+            padding-top: 15px;
         }
 
-        .treeSelect>ul {
+        ul {
             list-style-type: none;
         }
 
-        .treeSelect>ul>ul {
+
+        .caret {
             list-style-type: none;
             cursor: pointer;
-            user-select: none; /* Prevent text selection */
+            user-select: none;
+            /* Prevent text selection */
+        }
+
+        .caret::before {
+            content: "\25B6";
+            color: black;
+            display: inline-block;
+            margin-right: 6px;
+        }
+
+        /* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+        .caret-down::before {
+            transform: rotate(90deg);
+        }
+
+        /* Hide the nested list */
+        .nested {
+            display: none;
+        }
+
+        /* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+        .active {
+            display: block;
+        }
+
+        .backLit {
+            color: blue;
+        }
+
+        .piPoint {
+            cursor: pointer;
         }
     </style>
 
     <script type="text/javascript">
+        let bob;
 
         otherjsondata = [{
             "id": "superheroes",
@@ -64,7 +98,8 @@
 
 
 
-        var MyComponent = Formio.Components.components.textarea; // or whatever
+        var MyComponent = Formio.Components.components.component; // or whatever
+        // var MyComponent = Formio.Components.components.textarea; // or whatever
         class MyNewComponent extends MyComponent {
 
             static schema(...extend) {
@@ -86,14 +121,21 @@
             }
 
             render(element) {
+                // if (this.options.editComponent.my_new_component){
+                //     console.log('it was there')
+                // } else {
+                //     console.log('it was not there.')
+                // }
 
-                var tpl = "<div class='treeSelect' ref='myref'>";
+
+                var tpl = "<label ref='label'></label><div class='treeSelect' ref='myref'>";
 
 
                 var dataMap = {};
                 otherjsondata.forEach((node) => {
                     dataMap[node.id] = node
-                })
+                });
+                console.log(dataMap)
 
                 let root = [];
 
@@ -116,19 +158,24 @@
 
 
                 function recursiveUnorderedListGen(input, htmlObject) {
-                    tpl += "<ul class='nested'>";
+                    if (input.parent === "#") {
+                        tpl += "<ul>";
+                    } else {
+                        tpl += "<ul class='nested'>";
+                    }
                     if (input.children) {
-                        tpl += "<li><span class='caret'>" + input.id + "</li>"
+                        tpl += "<li><span ref='caretRef' class='caret'>" + input.text + "</li>"
                         input.children.forEach((child) => {
                             recursiveUnorderedListGen(child, tpl)
                         })
                     } else {
-                        tpl += "<li ref='item'>" + input.id + "</li>"
+                        tpl += "<li ref='item' class='piPoint'>" + input.text + "</li>"
                     }
                     tpl += "</ul>"
 
                 }
-                recursiveUnorderedListGen(root[0]);
+
+                recursiveUnorderedListGen(root[0])
 
                 tpl += "</div>";
 
@@ -148,7 +195,7 @@
             attach(element) {
                 // This code is called after rendering, when the DOM has been created.
                 // You can find your elements above like this:
-                this.loadRefs(element, { item: 'multiple' });
+                this.loadRefs(element, { item: 'multiple', caretRef: 'multiple' });
 
                 var superattach = super.attach(element);
 
@@ -156,8 +203,41 @@
                 this.refs.item.forEach((it) => {
                     it.onclick = (event) => {
                         this.setValue(it.innerHTML)
+
+                        it.classList.toggle('backLit')
+
                     }
-                })
+                });
+                this.refs.caretRef.forEach((caret) => {
+                    caret.onclick = (event) => {
+                        caret.parentElement.parentElement.children.forEach((comp) => {
+                            comp.classList.toggle("active");
+                        })
+                    }
+                });
+
+
+                // function workBackUp(input){
+                //     if (input.parentElement && input.parentElement.classList.contains('nested')){
+                //         input.parentElement.classList.add('active')
+                //         console.log(input.parentElement)
+                //         workBackUp(input.parentElement)
+                //     }
+                // }
+
+                let chosen;
+                if (this.options.editComponent.my_new_component) {
+                    chosen = this.options.editComponent.my_new_component
+                    this.refs.item.forEach((it) => {
+                        if (it.innerHTML === chosen) {
+                            it.classList.add('backLit')
+                            // workBackUp(it)
+                            // console.log(it.parentElement)
+
+                        }
+                    })
+                }
+
 
 
 
@@ -165,8 +245,10 @@
             }
 
             getValue() {
-                return 3; // the value this element puts into the form
+                return super.getValue();
             }
+
+
             // OR, depending on which component type you're basing on:
             getValueAt(index, value, flags) { }
 

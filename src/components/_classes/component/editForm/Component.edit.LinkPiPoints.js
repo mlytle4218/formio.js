@@ -73,8 +73,7 @@ export default [
   {
     weight: 25,
     type: 'MyNewComponent',
-    label: 'myNewComponent',
-    tooltip: 'This determines if the value will be Read Only if checked.',
+    label: 'PI Point',
     key: 'my_new_component',
     input: true
   },
